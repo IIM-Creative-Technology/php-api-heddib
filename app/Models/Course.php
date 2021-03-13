@@ -15,4 +15,20 @@ class Course extends Model
      * @var array
      */
     protected $fillable = ['name', 'start_date', 'end_date', 'intervenant_id', 'promotion_id'];
+
+    /**
+     * Retourne l'intervenant de ce cours
+     */
+    public function intervenant()
+    {
+        return $this->belongsTo(Intervenant::class);
+    }
+
+    /**
+     * Retourne la promotion qui suit ce cours
+     */
+    public function promotion()
+    {
+        return $this->belongsTo(Promotion::class);
+    }
 }

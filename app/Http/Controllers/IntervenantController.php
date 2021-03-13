@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Intervenant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class IntervenantController extends Controller
 {
@@ -13,7 +15,7 @@ class IntervenantController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Intervenant::all());
     }
 
     /**
@@ -34,7 +36,23 @@ class IntervenantController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validation des champs
+        $validator = Validator::make($request->all(), [
+            'firstname' => 'required|string',
+            'lastname' => 'required|string',
+            'arrival_year' => 'required|integer'
+        ]);
+
+        if($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $intervenant = Intervenant::where(['firstname' => $request->firstname, 'lastname' => $request->lastname])->first();
+
+        if($intervenant)
+            return response()->json('Intervenant already exists!', 400);
+
+        return response()->json(Intervenant::create($request->all()));
     }
 
     /**
@@ -45,7 +63,13 @@ class IntervenantController extends Controller
      */
     public function show($id)
     {
-        //
+        // Récupère l'intervenant
+        $intervenant = Intervenant::find($id);
+
+        if(!$intervenant)
+            return response()->json('Intervenant not found!', 404);
+
+        return response()->json($intervenant);
     }
 
     /**
@@ -68,7 +92,25 @@ class IntervenantController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $intervenant = Intervenant::find($id);
+
+        if(!$intervenant)
+            return response()->json('Intervenant not found!', 404);
+
+        // Validation des champs
+        $validator = Validator::make($request->all(), [
+            'firstname' => 'string',
+            'lastname' => 'string',
+            'arrival_year' => 'integer',
+        ]);
+
+        if($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $intervenant->update($request->all());
+
+        return response()->json($intervenant);
     }
 
     /**
@@ -79,6 +121,12 @@ class IntervenantController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Même si pas demandé en consigne, je laisse la suppression
+        $intervenant = Intervenant::find($id);
+
+        if(!$intervenant)
+            return response()->json('Intervenant not found!', 404);
+
+        return response()->json($intervenant->delete());
     }
 }

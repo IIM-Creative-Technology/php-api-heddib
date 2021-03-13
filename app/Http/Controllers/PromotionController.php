@@ -52,7 +52,7 @@ class PromotionController extends Controller
         $promotion = Promotion::where(['name' => $name], ['end_year', $end_year])->first();
 
         if($promotion)
-            return response()->json('Promotion already exists!', 409);
+            return response()->json('Promotion already exists!', 400);
 
         return response()->json(Promotion::create($request->all()));
     }
