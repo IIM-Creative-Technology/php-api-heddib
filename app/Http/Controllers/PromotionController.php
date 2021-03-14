@@ -121,6 +121,11 @@ class PromotionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $promotion = Promotion::find($id);
+
+        if(!$promotion)
+            return response()->json('Promotion not found!', 404);
+
+        return response()->json($promotion->delete());
     }
 }

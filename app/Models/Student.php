@@ -23,4 +23,12 @@ class Student extends Model
     {
         return $this->belongsTo(Promotion::class);
     }
+
+    /**
+     * Retourne les notes de l'étudiant
+     */
+    public function notes()
+    {
+        return $this->hasMany(Note::class);
+    }
 }

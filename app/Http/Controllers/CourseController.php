@@ -18,7 +18,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        return response()->json(Course::all());
+        return response()->json(Course::with(['intervenant', 'promotion'])->get());
     }
 
     /**

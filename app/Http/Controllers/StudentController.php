@@ -67,7 +67,7 @@ class StudentController extends Controller
     public function show($id)
     {
         // Récupère l'étudiant avec sa promotion
-        $student = Student::where('id', $id)->with('promotion')->first();
+        $student = Student::where('id', $id)->with(['promotion', 'notes'])->first();
 
         if(!$student)
             return response()->json('Student not found!', 404);
