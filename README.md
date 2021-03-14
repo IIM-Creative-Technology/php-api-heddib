@@ -99,7 +99,7 @@ DELETE http://127.0.0.1:8000/api/courses/{id}
 
 #### Notes
 
--   `value` : Integer
+-   `note` : Integer
 -   `student_id` : Integer
 -   `course_id` : Integer
 
