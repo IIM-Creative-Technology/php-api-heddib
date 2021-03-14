@@ -40,7 +40,7 @@ Toutes les routes ci-dessous sont uniquement accessibles aux administrateurs con
 
 #### Etudiant
 
--   `fristname` : String
+-   `firstname` : String
 -   `lastname` : String
 -   `age` : Integer
 -   `arrival_year` : Integer
